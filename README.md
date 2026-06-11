@@ -1,4 +1,4 @@
-# FitchGroup Codeathon 2025 - Submission
+# Aether AI (FitchGroup Codeathon 2025)
 
 ## Problem Statement and Hypothesis
 
