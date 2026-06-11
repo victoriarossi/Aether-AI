@@ -26,6 +26,7 @@ Predict company-level Scope 1 and Scope 2 greenhouse gas emissions for holdout t
 │   ├── environmental_activities.csv
 │   ├── sustainable_development_goals.csv
 │   ├── merged_dataset_complete.csv
+│   ├── model_metrics.csv
 │   ├── test_predictions.csv
 │
 ├── models/
@@ -35,10 +36,47 @@ Predict company-level Scope 1 and Scope 2 greenhouse gas emissions for holdout t
 │
 ├── notebooks/
 │   ├── submission.csv (our final submission)
+│   ├── basic_feature_engineering.ipynb
+│   ├── baseline_model_and_inference.ipynb
 │
+├── logs/
+│
+├── data_familiarization.py
+├── trend_n_distribution_analysis.py
+├── outlier_treatment.py
+├── merge_datasets.py
+├── gb_env_imputation.py
+├── knn_sdg_imputation.py
+├── feature_engineering.py
+├── training_model.py
+├── process_test_data.py
+├── predict_both_scopes.py
+├── run_test_predictions.py
+├── model_analysis.py
+│
+├── complete_pipeline.ipynb
 ├── fitch_codeathon_pipeline.ipynb (our main notebook)
+├── requirements.txt
 ├── README.md
 ```
+
+## Pipeline Scripts
+
+The methodology sections below are implemented as standalone Python scripts, orchestrated end-to-end by `fitch_codeathon_pipeline.ipynb` (or `complete_pipeline.ipynb`):
+
+- **data_familiarization.py**: Dataset summaries and missing-value profiling (Methodology §1)
+- **trend_n_distribution_analysis.py**: Distribution, correlation, and ESG analysis (Methodology §1)
+- **outlier_treatment.py**: Revenue log transform and environmental score capping (Methodology §2)
+- **merge_datasets.py**: Merges relational tables before and after imputation
+- **gb_env_imputation.py**: Gradient boosting imputation for environmental activities (Methodology §3)
+- **knn_sdg_imputation.py**: KNN imputation for sustainable development goals (Methodology §3)
+- **feature_engineering.py**: PCA, aggregations, interactions, and country features (Methodology §4)
+- **training_model.py**: Model tuning, evaluation, and artifact export (Methodology §5)
+- **process_test_data.py** / **predict_both_scopes.py**: Test feature engineering and inference (Methodology §6–7)
+- **run_test_predictions.py**: Runs test processing and prediction generation in sequence
+- **model_analysis.py**: Generates comparison plots from `data/model_metrics.csv`
+
+Dependencies are pinned in `requirements.txt` (pandas, scikit-learn, CatBoost, XGBoost, etc.).
 ## Submission files / datasets / dashboards
 - fitch_codeathon_pipeline.ipynb
 - notebooks/submission.csv
@@ -294,6 +332,7 @@ Training dataset metrics (log-transformed targets):
 ## Files Generated
 
 - `data/test_predictions.csv`: Raw predictions with entity_id, pred_target_scope_1, pred_target_scope_2
+- `data/model_metrics.csv`: Validation and test metrics for all tuned models
 - `models/best_scope1.joblib`: Trained CatBoost model for Scope 1
 - `models/best_scope2.joblib`: Trained ElasticNet model for Scope 2
 - `models/feature_cols.joblib`: Feature list ensuring reproducible predictions
